@@ -11,16 +11,24 @@
 #include <ctype.h>
 
 
+
+/*
+ * Example 10. Nested switch statement. Try it. Refuse to calculate if the user gives wrong
+ * options. Warn him in this case. If could we accept a new figure (square and cube) to calculate
+ * its area and volume, respectively? Change the code to implement this extension.
+ */
+
 void example_10()
 {
   char answer1, answer2;
   float area=0, volume=0, radius, length, width;
-  printf("---Main Menu---\nA – area\nB – volume");
+  printf("---Main Menu---\nA – area\nB – volume\n");
   scanf(" %c", &answer1 );
+
   switch(answer1)
   {
   	case 'A':
-    	printf("---Area Menu---\nA – rectangle\nB – circle\nC – square\nD");
+    	printf("---Area Menu---\nA – rectangle\nB – circle\nC – square\n");
     	scanf(" %c", &answer2 );
 
     	switch(answer2)//nested switch
@@ -32,6 +40,7 @@ void example_10()
 				scanf("%f",&width);
 
 				area = length * width;
+			  	printf("Area:%f\n", area);
 				break;
 
 		   case 'B':
@@ -39,6 +48,7 @@ void example_10()
 				scanf("%f",&radius);
 
 				area = 3.141619 * radius * radius;
+			  	printf("Area:%f\n", area);
 				break;
 
 		   case 'C':
@@ -46,14 +56,17 @@ void example_10()
 				scanf("%f",&length);
 
 				area = length * length;
+			  	printf("Area:%f\n", area);
 				break;
+
+			  default:
+				  printf("\nInvalid input\n");
     	}
 
-  	printf("Area:%f\n", area);
 	break;
 
 case 'B':
-	  printf("-Volume Menu-\nA – cylinder\nB – sphere\nC – cube");
+	  printf("-Volume Menu-\nA – cylinder\nB – sphere\nC – cube\n");
 	  scanf(" %c", &answer2 );
 
 	  switch(answer2)
@@ -64,33 +77,38 @@ case 'B':
 				printf("Radius:");
 				scanf("%f",&radius);
 				volume = length * 3.141619 *radius * radius;
+				printf("Volume:%f\n", volume);
 				break;
 
 		  case 'B':
 				printf("Radius:");
 				scanf("%f",&radius);
 				volume = 4/3 * 3.141619 *radius*radius*radius;
+				printf("Volume:%f\n", volume);
 				break;
 
 		  case 'C':
 				printf("Length:");
 				scanf("%f",&length);
-
-
-				area = length * length * length;
+				volume = length * length * length;
+				printf("Volume:%f\n", volume);
 				break;
-	}
 
-	printf("Volume:%f\n", volume);
+		  default :
+			  printf("\nInvalid input\n");
+			  break;
+	}
+	break;
+
+	  default:
+		  printf("\nInvalid input\n");
 	break;
    }
 }
 
-
 /*
  * Exercise 1. Write a C program to accept an integer and show if it is even or odd (0 is even).
  */
-
 
 void ex_01()
 {
@@ -818,6 +836,8 @@ void proj()
 int main(void)
 {
 
+	//example_10();
+
 	//ex_01();
 	//ex_02();
 	//ex_03();
@@ -830,11 +850,11 @@ int main(void)
 	//ex_11();
 	//ex_11_1();
 	//ex_12();
-	//ex_13();
+	ex_13();
 
 	//ex_x_y();
 
-	proj();
+	//proj();
 
 	return 0;
 }
