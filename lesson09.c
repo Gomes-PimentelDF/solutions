@@ -11,25 +11,9 @@
 #include <ctype.h>
 
 
-/*
- * Example 1
- */
-
-
-/*
- * Example 2
- */
-
-/*
- * Example 8 - missing brackets on if
- */
-
-/*
- * Example 10
- */
 void example_10()
 {
-char answer1, answer2;
+  char answer1, answer2;
   float area=0, volume=0, radius, length, width;
   printf("---Main Menu---\nA – area\nB – volume");
   scanf(" %c", &answer1 );
@@ -102,27 +86,6 @@ case 'B':
    }
 }
 
-void example_02()
-{
-	int x, y;
-	printf("enter the value of x:");
-	scanf("%d", &x);
-	printf("enter the value of y:");
-	scanf("%d", &y);
-
-	if (x>y)
-	{
-	   printf("x is greater than y\n");
-	}
-	if (x<y){
-	   printf("x is less than y\n");
-	}
-	if (x==y)
-	{
-	    	   printf("x is equal to y\n");
-	}
-	printf("Goodbye");
-}
 
 /*
  * Exercise 1. Write a C program to accept an integer and show if it is even or odd (0 is even).
@@ -145,7 +108,6 @@ void ex_01()
 	{
 		printf("The number %d is even!\n", num);
 	}
-
 }
 
 /*
@@ -193,7 +155,6 @@ void ex_03()
 	{
 		printf("The higher number is: %d", n2);
 	}
-
 }
 
 /*
@@ -373,7 +334,7 @@ void ex_07()
 
 		default:
 		{
-			printf("\nInsert an integer between 1 and 7");
+			printf("\nEnter an integer between 1 and 7");
 		}
 	}
 }
@@ -439,7 +400,7 @@ void ex_09()
 	printf("Enter to real numbers: ");
 	scanf("%f %f", &n1, &n2);
 
-	printf("Choose one of the possbile operators, (+),(-),(*),(/),(^): ");
+	printf("Choose one of the following operations, (+),(-),(*),(/),(^): ");
 	scanf(" %c", &op);
 
 	switch(op)
@@ -488,30 +449,6 @@ void ex_09()
 	{
 		printf("Result: %.2f", res);
 	}
-}
-
-void ex_10()
-{
-	int x, y, z;
-
-	x = y = z = 1;
-	++x || ++y && ++z;	printf("1: x=%d\ty=%d\tz=%d\n", x, y, z); // 2,1,1
-
-	x = y = z = 1;
-	++x && ++y || ++z;	printf("2: x=%d\ty=%d\tz=%d\n", x, y, z); //2,2,1
-
-	x = y = z = 1;
-	++x && ++y && ++z;	printf("3: x=%d\ty=%d\tz=%d\n", x, y, z); //2,2,2
-
-	x = y = z = -1; // Operators precedence first && than ||
-	++x && ++y || ++z;	printf("4: x=%d\ty=%d\tz=%d\n", x, y, z); //0, -1, 0
-
-	x = y = z = -1; // Operators precedence first && than ||
-	++x || ++y && ++z;	printf("5: x=%d\ty=%d\tz=%d\n", x, y, z); //0, 0, -1
-
-	x = y = z = -1;
-	++x && ++y && ++z;	printf("6: x=%d\ty=%d\tz=%d\n", x, y, z); // 0, -1, -1
-
 }
 
 /*
@@ -637,41 +574,101 @@ void ex_12()
  *
  */
 
+//Auxiliary function to print an int in binary notation
+void decToBinary(unsigned int n)
+{
+	unsigned int binary[100] = {0};
+	int i = 0, j;
+
+	while(n > 0)
+	{
+		binary[i] = n % 2;
+		n = n / 2;
+		i++;
+	}
+
+	for(j = 7 ; j >=0 ; j--)
+	{
+		printf("%d", binary[j]);
+	}
+
+	putchar('\n');
+}
+
 void ex_13()
 {
-	int op;
-	int switches = 0b11111111; // or 0x00 or 0
-	int switcheIndex = 0;
+	unsigned int op, iState, switches, switchIndex;
 
-	printf("Do you want to, turn on(1), turn off (2) or toggle(3) the switch?");
-	scanf("%d", &op);
 
-	printf("which switch (1 to 8) ?: ");
-	scanf("%d", &switcheIndex);
+	printf("Do you want all the switches off(0) or on(1): ");
+	scanf(" %u", &iState);
 
-	printf("\nswitches current state: %d\n", switches);
+	if(iState == 0)
+	{
+		printf("Do you want to, turn on(1) or toggle(3) a switch? ");
+		switches =  0b00000000; // or 0x00 or 0
+	}
+	else
+	{
+		printf("Do you want to turn off(2) or toggle(3) a switch? ");
+		switches =  0b11111111; // or 0xff or 255
+	}
+
+	scanf(" %u", &op);
+
+	printf("Which switch (1 to 8) ? ");
+	scanf(" %u", &switchIndex);
+	--switchIndex;
+
+	printf("switches current state:\n\tDecimal: %d \n\tHex: 0x%02x \n\tBinary: ", switches, switches);
+	decToBinary(switches);
 
 	switch(op)
 	{
 		case 1:
 		{
-			switches |= (1<<(switcheIndex -1));
+			/*
+			 * e.g.
+			 * switches = 0 or 0b0000 0000
+			 * switchIndex = 2 or 0b0000 0010
+			 *
+			 * 0b0000 0000 | 0b0000 0010 = 0b0000 0010
+			*/
+
+			switches |= (1<<(switchIndex));
 			break;
 		}
 		case 2:
 		{
-			switches &= ~(1<<(switcheIndex -1));
+			/*
+			 * e.g.
+			 *switches = 255 or 0b1111 1111
+			 *switchIndex = 2 or 0b0000 0010
+			 *The complement of  0b0000 0010 is ob1111 1101
+			 *
+			 *0b1111 1111 & 0b1111 1101 = 0b1111 1101
+			*/
+
+			switches &= ~(1<<(switchIndex));
 			break;
 		}
 		case 3:
 		{
-			switches ^= (1<<(switcheIndex -1));
+			/*
+			 * e.g.
+			 * switches = 0 or 0b0000 0000
+			 * switchIndex = 2 or 0b0000 0010
+			 *
+			 * 0b0000 0000 ^ 0b0000 0010 = 0b0000 0010
+			*/
+
+			switches ^= (1<<(switchIndex));
 			break;
 		}
 	}
 
-	printf("switches  final state: %d", switches);
-
+	printf("\nswitches final state:\n\tDecimal: %d \n\tHex: 0x%02x \n\tBinary: ", switches, switches);
+	decToBinary(switches);
 }
 
 
@@ -758,7 +755,7 @@ void ex_x_y()
 
 void proj()
 {
-	int day,month,year,nDays;
+	int day, month, year, nDays, valid = 1;
 
 	printf("\nEnter the day: ");
 	scanf("%d", &day);
@@ -767,7 +764,9 @@ void proj()
 	printf("Enter the year: ");
 	scanf("%d", &year);
 
-	switch(month){
+
+	switch(month)
+	{
 		case 1:
 		case 3:
 		case 5:
@@ -775,45 +774,44 @@ void proj()
 		case 8:
 		case 10:
 		case 12:
-			nDays=31;
+			(day > 31) ?  (valid = 0) : (nDays = 31);
 			break;
 
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			nDays=30;
+			(day > 30) ? (valid = 0) : (nDays=30);
 			break;
 
 		case 2:
-		{
-			if(year%4==0)
-			{
-				nDays=29;
-			}
-			else
-			{
-				nDays=28;
-			}
+			(day > 28) ? (valid = 0) : (nDays=28);
 			break;
+
+	}
+
+	if(valid && (month > 0 && month <= 12) && (year >= 2017 && year <= 2018) && day > 0)
+	{
+		day++;
+
+		if(day > nDays)
+		{
+			day=1;
+			month++;
 		}
+
+		if(month > 12)
+		{
+			month=1;
+			year++;
+		}
+
+		printf("\n\nThe next date date is:\t%02d/%02d/%d\n", day, month, year);
 	}
-
-	day++;
-
-	if(day > nDays)
+	else
 	{
-		day=1;
-		month++;
+		printf("\n\nThe date %02d/%02d/%d is not valid!", day, month, year);
 	}
-
-	if(month > 12)
-	{
-		month=1;
-		year++;
-	}
-
-	printf("\n\nThe next date date is:\t%d/%d/%d\n", day, month, year);
 }
 
 
