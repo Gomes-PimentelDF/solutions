@@ -649,9 +649,9 @@ void ex_13()
 			 * e.g.
 			 * switches = 0 or 0b0000 0000
 			 * switchIndex = 3 or 0b0000 0011
-			 *  1<<(switchIndex) = 0b0000 0100  
+			 *  1<<(switchIndex) = 0b0000 1000  
 			 * 
-			 * 0b0000 0000 | 0b0000 0100 = 0b0000 0100
+			 * 0b0000 0000 | 0b0000 1000 = 0b0000 1000
 			*/
 
 			switches |= (1<<(switchIndex));
@@ -663,10 +663,10 @@ void ex_13()
 			 * e.g.
 			 * switches = 255 or 0b1111 1111
 			 * switchIndex = 3 or 0b0000 0011
-			 *  1<<(switchIndex) = 0b0000 0100  
-			 * The complement(~) of  0b0000 0010 is ob1111 1011
+			 *  1<<(switchIndex) = 0b0000 1000  
+			 * The complement(~) of  0b0000 0010 is ob1111 0111
 			 *
-			 *0b1111 1111 & 0b1111 1011 = 0b1111 1011
+			 *0b1111 1111 & 0b1111 1011 = 0b1111 0111
 			*/
 
 			switches &= ~(1<<(switchIndex));
@@ -678,9 +678,9 @@ void ex_13()
 			 * e.g.
 			 * switches = 0 or 0b0000 0000
 			 * switchIndex = 3 or 0b0000 0011
-			 *  1<<(switchIndex) = 0b0000 0100  
+			 *  1<<(switchIndex) = 0b0000 1000  
 			 *
-			 * 0b0000 0000 ^ 0b0000 0100 = 0b0000 0100
+			 * 0b0000 0000 ^ 0b0000 0100 = 0b0000 1000
 			*/
 
 			switches ^= (1<<(switchIndex));
